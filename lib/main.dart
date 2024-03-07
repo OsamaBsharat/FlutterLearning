@@ -37,7 +37,20 @@ class MyAppState extends ChangeNotifier {
     'مهندس حاسوب',
     'مطور تطبيقات هواتف محمولة'
   ];
+  Random random = Random();
+  var current = '! هيا , لنبدأ';
   void getNext() {
+    current = strings[random.nextInt(6) + 0];
+    notifyListeners();
+  }
+
+  List<String> favorites = [];
+  void toggleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
     notifyListeners();
   }
 }
@@ -46,20 +59,40 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    Random random = Random();
-    var current = appState.strings[random.nextInt(6) + 0];
+    var word = appState.current;
+    IconData icon;
+    if (appState.favorites.contains(word)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BigCard(current: current),
+            BigCard(word: word),
             SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
-              },
-              child: Text('! انطلق'),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    appState.getNext();
+                  },
+                  child: Text('! انطلق'),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavorite();
+                  },
+                  icon: Icon(icon),
+                  label: Text('احببته'),
+                ),
+              ],
             ),
           ],
         ),
@@ -71,10 +104,10 @@ class MyHomePage extends StatelessWidget {
 class BigCard extends StatelessWidget {
   const BigCard({
     super.key,
-    required this.current,
+    required this.word,
   });
 
-  final String current;
+  final String word;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +120,7 @@ class BigCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Text(
-          current,
+          word,
           style: style,
         ),
       ),
