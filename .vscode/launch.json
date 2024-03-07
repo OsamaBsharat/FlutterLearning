@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flutter_application_1",
+            "request": "launch",
+            "type": "dart",
+            "deviceName": "Pixel_8_Pro_API_30",  // Specify the device you want to use
+        },
+        {
+            "name": "flutter_application_1 (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceName": "Pixel_8_Pro_API_30",  // Specify the device you want to use
+        },
+        {
+            "name": "flutter_application_1 (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "deviceName": "Pixel_8_Pro_API_30",  // Specify the device you want to use
+        }
+    ]
+}
